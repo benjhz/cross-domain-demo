@@ -7,16 +7,40 @@
 </head>
 
 <body>
-
+  <h1>Server1</h1>
+  <button id="btnGetData">获取跨域数据</button>
   <script>
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', '', true);
-    xhr.onreadystatechange = function(){
-      if(xhr.readyState == 4 && xhr.status == 200){
-        console.log(xhr.responseText);
+    (function() {
+      'use strict';
+
+      var getData = function(successCallback, failCallback) {
+        var xhr = new XMLHttpRequest();
+        var url = 'http://localhost:3003/foo';
+
+        xhr.open('GET', url, true);
+        xhr.withCredentials = true; //发送cookie
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState == 4) {
+            if (xhr.status == 200 || xhr.status == 304) {
+              successCallback && successCallback(xhr.responseText);
+            } else {
+              failCallback && failCallback();
+            }
+          }
+        };
+        xhr.send();
       }
-    };
-    xhr.send();
+
+      var btnGetData = document.getElementById('btnGetData');
+      btnGetData.onclick = function() {
+        getData(function(data) {
+          alert(data);
+        }, function(){
+          console.log('错误');
+        });
+      };
+
+    }())
   </script>
 </body>
 

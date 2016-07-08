@@ -4,8 +4,8 @@ var port = 3000;
 
 app.use(express.static(__dirname + '/static'));
 
-app.get('/ajax', function(req, res) {
-  res.send('ajax data from server1');
+app.get('/foo', function(req, res) {
+  res.send('data from server1');
 });
 
 app.listen(port, function() {
