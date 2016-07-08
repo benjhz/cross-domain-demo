@@ -15,12 +15,15 @@
   <h1>Server1</h1>
   <button id="btnGetDataByCORS">获取跨域数据（CORS方式）</button>
   <button id="btnGetDataByJSONP">获取跨域数据（JSONP方式）</button>
+  <button id="btnGetDataByWebSocket">获取跨域数据（WebSocket方式）</button>
+  <script src='/js/socket.io.js'></script>
   <script>
     (function() {
       'use strict';
 
       var server2Origin = 'http://localhost:3003';
 
+      //CORS方式
       var btnGetDataByCORS = document.getElementById('btnGetDataByCORS');
       btnGetDataByCORS.onclick = function() {
         var url = server2Origin + '/cors';
@@ -40,6 +43,7 @@
         xhr.send();
       };
 
+      //JSONP方式
       var btnGetDataByJSONP = document.getElementById('btnGetDataByJSONP');
       btnGetDataByJSONP.onclick = function() {
         var url = server2Origin + '/jsonp?callback=processJSONPData'; //指定回调方法
@@ -52,6 +56,15 @@
         }
       };
 
+      //WebSocket方式
+      var btnGetDataByWebSocket = document.getElementById('btnGetDataByWebSocket');
+      btnGetDataByWebSocket.onclick = function(){
+        var socket = io(server2Origin);
+        socket.on('data message', function(msg){
+          alert(msg);
+        });
+        socket.emit('data message');
+      }
     }())
   </script>
 </body>
