@@ -19,9 +19,11 @@
     (function() {
       'use strict';
 
+      var server2Origin = 'http://localhost:3003';
+
       var btnGetDataByCORS = document.getElementById('btnGetDataByCORS');
       btnGetDataByCORS.onclick = function() {
-        var url = 'http://localhost:3003/foo';
+        var url = server2Origin + '/cors';
         var xhr = new XMLHttpRequest();
 
         xhr.open('GET', url, true);
@@ -40,12 +42,12 @@
 
       var btnGetDataByJSONP = document.getElementById('btnGetDataByJSONP');
       btnGetDataByJSONP.onclick = function() {
-        var url = 'http://localhost:3003/jsonp?callback=processJSONPData';
+        var url = server2Origin + '/jsonp?callback=processJSONPData'; //指定回调方法
         var script = document.createElement('script');
         script.src = url;
         document.getElementsByTagName('head')[0].appendChild(script);
 
-        window.processJSONPData = function(data){
+        window.processJSONPData = function(data) {
           alert(data);
         }
       };

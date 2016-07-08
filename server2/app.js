@@ -1,12 +1,15 @@
 var express = require('express');
 var app = express();
-var port = 3003;
-var server1Origin = "http://localhost:3000";
+var serversConfig = require('./../config/servers');
+var server1 = serversConfig.server1;
+var server2 = serversConfig.server2;
+var port = server2.port;
+var server1Origin = "http://localhost:" + server1.port;
 
 app.use(express.static(__dirname + '/static'));
 
 //方式一： 跨域资源共享 (CORS)
-app.get('/foo', function(req, res) {
+app.get('/cors', function(req, res) {
   res.setHeader('Access-Control-Allow-Origin', server1Origin);
   res.setHeader('Access-Control-Allow-Credentials', true); //允许发送cookie
   res.send('data from server2(CORS)');

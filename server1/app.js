@@ -1,12 +1,10 @@
 var express = require('express');
 var app = express();
-var port = 3000;
+var serversConfig = require('./../config/servers');
+var server1 = serversConfig.server1;
+var port = server1.port;
 
 app.use(express.static(__dirname + '/static'));
-
-app.get('/foo', function(req, res) {
-  res.send('data from server1');
-});
 
 app.listen(port, function() {
   console.log('server1 listening at http://localhost:%s', port);
